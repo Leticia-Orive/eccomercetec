@@ -1,0 +1,122 @@
+p{% extends "layout/base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Product LIst</title>
+
+{% endblock %}
+
+{% block main %}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-1 title">Listado de Productos
+                {% if user.is_superuser %}
+                <a class="btn btn-primary" href="{% url 'product_new' %}">Crear nuevo producto</a>
+                <!--<a class="btn btn-danger" href="#">Borrar todos</a>-->
+                {% endif %}
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col">
+            <form id="filters" action="{% url 'product_filter' %}" method="get">
+                <div class="mb-3">
+                    <label for="category_id">
+                        Filtrar por categoria:
+                        <select class="form-select" id="category_id" name="category_id">
+                            <option value="">----------</option>
+
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category_id == category.id %}
+                                    selected {% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+
+                        </select>
+                    </label>
+                    <label for="manufacturers">
+                        Filtrar por Fabricante:
+                        <select class="form-select ms-3" id="manufacturers" name="manufacturers" multiple>
+
+                            {% for manufacturer in manufacturers %}
+                                <option value="{{ manufacturer.id }}" {% if manufacturer.id in manufacturers_filtered %}selected{% endif %}>
+                                    {{ manufacturer.name }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+                    </label>
+
+                    <button class="btn btn-info ms-3" type="submit">Aplicar filtro</button>
+                    <a class="btn btn-warning ms-3" href="{% url 'product_list' %}">Limpiar filtros</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        {% for product in products %}
+        <div class="card col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-4">
+            <img class="card-img-top" src="{% static 'img/' %}{{ product.image }}" alt="product" height="200px">
+
+            <div class="card-body">
+                {% for manufacturer in product.manufacturers.all %}
+                    <span class="badge bg-primary"> {{ manufacturer.name }} </span>
+                <!-- <h4 class="card-title"> {{ manufacturer }} </h4>-->
+                {% endfor %}
+                <h5 class="card-title"> {{ product.model }}</h5>
+                <!--<p class="card-text"> {{ product.description }} </p>-->
+                <p class="card-text"> € {{ product.price|floatformat:2 }} </p>
+            </div>
+            <div class="card-footer text-center bg-secondary">
+                <a href="{% url 'product_view' product.id %}" class="btn btn-primary">View</a>
+                {% if user.is_superuser %}
+                <a href="{% url 'product_load' product.id %}" class="btn btn-info">Edit</a>
+                <!--<a href="{% url 'product_delete' product.id %}" class="btn btn-danger">DELETE</a>-->
+                <button custom-href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-script">Delete
+                </button>
+                {% endif %}
+            </div>
+            <div class="card-footer text-center bg-dark ">
+                <a href="{% url 'cart_add_product' product.id %}" class="btn text-white btn-lg btn-block">Agregar al Carrito</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<!--JQUERY-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" href="{% static 'js/main.js' %}"></script>
+
+<script>
+    $(function(){
+
+        $(".btn-script").click(function(){
+            console.log("pulsaste delete");
+            if(confirm("ESTAS SEGURO DE ELIMINAR EL PRODUCTO ?")){
+                window.location.href = 'http://localhost:8000' + $(this).attr('custom-href');
+            }
+
+        });
+
+    });
+
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+
+{% block title %}
+    <title>Product {{ product.id }}</title>
+{% endblock %}
+
+{% block main %}
+    <!--
+    <div style="height:200px;
+            background-image: url({% static 'img/hp-omen-15.jpg' %});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;">
+
+    </div>-->
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="col-8">
+                <h1 class="title">Información del producto {{ product.id }}</h1>
+                <img style="max-width: 100px;" src="{% static 'img/' %}{{ product.image }}" alt="product">
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>ID:</strong> {{ product.id }}
+                    </li>
+                    <!--<li class="list-group-item">
+                        <strong>FABRICANTE:</strong> {{ product.manufacturer }}
+                    </li>-->
+
+                    {% if manufacturers|length %}
+                    <h3 class="mt-3 subtitle">Fabricantes</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            {% for manufacturer in manufacturers %}
+                                <span class="badge {{ manufacturer.blue }}">{{ manufacturer.name }}</span>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    {% endif %}
+
+                    <li class="list-group-item">
+                        <strong>MODELO:</strong> {{ product.model }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>RAM:</strong> {{ product.ram }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>DESCRIPCION:</strong> {{ product.description }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>PRECIO:</strong> € {{ product.price }}
+                    </li>
+
+
+                </ul>
+
+
+                <div class="mt-5">
+                    {% if user.is_superuser %}
+                    <a class="btn btn-success" href="{% url 'product_load' product.id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'product_delete' product.id %}">Borrar</a>
+                    {% endif %}
+                    <a class="btn btn-info" href="{% url 'product_list' %}">Volver al listado</a>
+                </div>
+
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

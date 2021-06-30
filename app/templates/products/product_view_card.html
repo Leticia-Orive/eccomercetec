@@ -1,0 +1,124 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+
+{% block title %}
+    <title>Product {{ product.id }}</title>
+{% endblock %}
+{% block style %}
+<style>
+    .card-header-first {
+      margin-top: -25px;
+      height: 80px;
+      background: linear-gradient(-90deg, #bf019f, #f28a57);
+      box-shadow: 1px 5px 15px #a2a2a2;
+      text-align: center;
+    }
+
+    .card-section {
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .card-section:hover {
+      box-shadow: 1px 1px 20px #d2d2d2;
+    }
+
+    .img-card {
+      height: 200px;
+    }
+
+
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <!--
+            <div class="col-2">
+
+            </div>
+            -->
+            <div class="col">
+
+            <div class="card mb-3 card-section">
+                <!--<h2 class="title">Detalle del producto {{ product.id }}</h2>-->
+                <div class="row g-0">
+                    <div class="col-md-4">
+                       <!--<img class="img-card" style="max-width: 250px;" src="{% static 'img/' %}{{ product.image }}" alt="product" height="250px">-->
+                        <img class="img-card" src="{% static 'img/' %}{{ product.image }}" alt="product" >
+                        {% if manufacturers|length %}
+                        <p class="card-text p-3"><strong>FABRICANTES</strong></p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        {% for manufacturer in manufacturers %}
+                                            <span class="badge {{ manufacturer.blue }}">{{ manufacturer.name }}</span>
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-header-first rounded p-3">
+                            <h5 class="card-header-title text-white pt-3">
+                                <strong>DETALLE DEL PRODUCTO</strong>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <!--
+                                <li class="list-group-item">
+                                    <strong>ID:</strong> {{ product.id }}
+                                </li>
+
+                                {% if manufacturers|length %}
+                                <h3 class="mt-3 subtitle">Fabricantes</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        {% for manufacturer in manufacturers %}
+                                            <span class="badge {{ manufacturer.blue }}">{{ manufacturer.name }}</span>
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                                {% endif %}
+                                -->
+
+                                <li class="list-group-item ">
+                                    <p class="card-text"><strong>MODELO:</strong></p><p class="card-text"> {{ product.model }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>RAM:</strong> {{ product.ram }}
+                                </li>
+                                <li class="list-group-item">
+                                    <p class="card-text"><strong>DESCRIPCION:</strong></p><p class="card-text"> {{ product.description }}</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>PRECIO:</strong> € {{ product.price|floatformat:2 }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div>
+                <div class="col-12 mt-5 text-center">
+                    {% if user.is_superuser %}
+                    <a class="btn btn-success" href="{% url 'product_load' product.id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'product_delete' product.id %}">Borrar</a>
+                    {% endif %}
+                    <a class="btn btn-info" href="{% url 'product_list' %}">Volver al listado</a>
+                </div>
+            </div>
+            <!--
+            <div class="col-2">
+
+            </div>
+            -->
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layout/base.html" %}
+{% block title %}
+    <title>Formas de pago</title>
+{% endblock %}
+
+{% block main %}
+
+    <style>
+  .main {
+    width: 80%;
+    margin: auto;
+    font-family: dinpro;
+    margin-top: -18px;
+    margin-bottom: -10px;
+    padding: 40px;
+}
+h1{
+text-align: center;
+}
+
+</style>
+
+
+<div class="main">
+
+<h1>Transferencia bancaria o ingreso :</h1>
+<h4>Seleccionando este medio de pago, al aceptar el pedido recibirás un correo electrónico de confirmación con nuestros datos
+    bancarios. De no ser así, comprueba los filtros de correo no deseado.</h4><br>
+
+<p>No comenzaremos a procesar tu pedido hasta que no recibamos la confirmación de pago a través de la Entidad Bancaria.
+    (Agradecemos el envío del justificante de pago indicando tu nombre y número de pedido).</p><br>
+
+<p>El tiempo de entrega estimado que te indicamos a la hora de hacer el pedido se verá aumentado en tantos días como tarde en
+    hacerse efectivo el pago.</p>
+
+<p>Si esto supusiera un inconveniente, te recomendamos elegir otro método de pago.</p>
+</div>
+{% endblock %}
