@@ -73,6 +73,6 @@ Productos / Categorías Estas aplicaciones muestran los productos que se han agr
 
 Carrito
 
-Hosting Esta aplicación está en GitHub https://github.com/salasPMJ/ecommerce
+Hosting Esta aplicación está en GitHub https://github.com/Leticia-Orive/eccomercetec.git
 
 Bases de datos / Archivos estáticos Cuando se ejecuta localmente, se utilizó la base de datos Mysql . El archivo settings.py se modificó para que la base de datos y los archivos estáticos apunten a los recursos en línea.
